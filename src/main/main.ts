@@ -31,6 +31,32 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+ipcMain.on('toggle', async (event, arg: 'high' | 'low') => {
+  try {
+    switch (arg) {
+      case 'high':
+        shell.openPath(`${app.getAppPath()}\\local\\HighProfile.lnk`);
+        break;
+
+      case 'low':
+        shell.openPath(`${app.getAppPath()}\\local\\LowProfile.lnk`);
+        break;
+
+      default:
+        throw new Error('Invalid argument');
+    }
+
+    event.reply('toggle', true);
+    event.returnValue = true;
+  } catch (error) {
+    console.error(error);
+
+    event.reply('toggle', false);
+
+    event.returnValue = false;
+  }
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -70,10 +96,12 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728,
+    show: true,
+    width: 360,
+    height: 360,
     icon: getAssetPath('icon.png'),
+    autoHideMenuBar: true,
+    darkTheme: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },

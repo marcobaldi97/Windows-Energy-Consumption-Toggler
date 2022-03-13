@@ -8,8 +8,8 @@ body {
   height: 100vh;
   background: linear-gradient(
     200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
+    #2a97fe -29.09%,
+    #ad486d 51.77%,
     #7a2c9e 129.35%
   );
   font-family: sans-serif;
@@ -17,6 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 button {
@@ -26,6 +27,7 @@ button {
   border: none;
   appearance: none;
   font-size: 1.3rem;
+  color: #5c0883;
   box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
     0px 18px 88px -4px rgba(24, 39, 75, 0.14);
   transition: all ease-in 0.1s;
@@ -35,28 +37,14 @@ button {
 
 button:hover {
   transform: scale(1.05);
+  color: #5c0883;
   opacity: 1;
 }
 
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  height: fit-content;
-  width: fit-content;
-  margin: 10px;
-}
-
-a:hover {
-  opacity: 1;
-  text-decoration: none;
-}
-
-.Hello {
+.buttons-group {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin: 20px 0;
+  text-align: center;
 }
