@@ -13,6 +13,9 @@ contextBridge.exposeInMainWorld('electron', {
     turnLow() {
       return ipcRenderer.sendSync('toggle', 'low');
     },
+    cmd(commandP) {
+      return ipcRenderer.sendSync('cmd', commandP);
+    },
     on(channel, func) {
       const validChannels = validChannelsArray;
       if (validChannels.includes(channel)) {

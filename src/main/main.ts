@@ -12,6 +12,7 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { exec } from 'child_process';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -31,15 +32,35 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('toggle', async (event, arg: 'high' | 'low') => {
+ipcMain.on('toggle', async (event, arg: 'high' | 'low', planName?: string) => {
+  function execute(command: string, callback: (stdout: string) => void) {
+    exec(command, (error, stdout, stderr) => {
+      callback(stdout);
+    });
+  }
+
   try {
     switch (arg) {
       case 'high':
-        shell.openPath(`${app.getAppPath()}\\local\\HighProfile.lnk`);
+        execute(
+          `powercfg /setactive ${
+            planName ?? '8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c'
+          }`,
+          (output) => {
+            console.log(output);
+          }
+        );
         break;
 
       case 'low':
-        shell.openPath(`${app.getAppPath()}\\local\\LowProfile.lnk`);
+        execute(
+          `powercfg /setactive ${
+            planName ?? 'b1c73ca3-c7e6-4158-89dc-305ad3edc4c5'
+          }`,
+          (output) => {
+            console.log(output);
+          }
+        );
         break;
 
       default:
@@ -55,6 +76,18 @@ ipcMain.on('toggle', async (event, arg: 'high' | 'low') => {
 
     event.returnValue = false;
   }
+});
+
+ipcMain.on('cmd', async (event, commandP: string) => {
+  function execute(command: string, callback: (stdout: string) => void) {
+    exec(command, (error, stdout, stderr) => {
+      callback(stdout);
+    });
+  }
+
+  return execute(commandP, (output) => {
+    event.returnValue = output;
+  });
 });
 
 if (process.env.NODE_ENV === 'production') {

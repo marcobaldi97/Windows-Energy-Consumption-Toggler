@@ -1,0 +1,9 @@
+.buttons-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-selected {
+  background-color: rgb(146, 245, 133);
+}
