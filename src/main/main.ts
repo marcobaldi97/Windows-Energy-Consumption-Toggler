@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Tray, Menu } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { exec } from 'child_process';
@@ -131,7 +131,8 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: true,
     width: 360,
-    height: 360,
+    height: 460,
+    resizable: true,
     icon: getAssetPath('icon.png'),
     autoHideMenuBar: true,
     darkTheme: true,

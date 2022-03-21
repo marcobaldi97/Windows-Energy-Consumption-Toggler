@@ -5,7 +5,7 @@ import './Content.css';
 export type EnergyProfile = { id: string; value: string; selected: boolean };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Content(props) {
+export function Content(props: unknown) {
   const [energyProfiles, setEnergyProfiles] = useState<EnergyProfile[]>([]);
 
   async function getEnergyProfiles(): Promise<Array<EnergyProfile>> {
